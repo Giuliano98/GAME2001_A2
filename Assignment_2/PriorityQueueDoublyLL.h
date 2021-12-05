@@ -319,6 +319,7 @@ public:
 		// Create a new node
 		auto node = CreateNewNode();
 		node->m_data = newData;
+		
 
 		// Reroute pointers
 		UpdateNodePointers(PushBack, node);

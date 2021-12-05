@@ -2,6 +2,15 @@
 #include "PriorityQueue.h"
 using namespace std;
 
+class MyTestClass
+{
+public:
+
+private:
+	int m_priority;
+	int m_id;
+};
+
 
 class NetworkMessage
 {
