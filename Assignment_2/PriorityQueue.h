@@ -74,6 +74,7 @@ public:
 
 private:
 	DoublyLinkedList<T> m_elements; // Priority Queue Linked List
+	LinkNode<T>* m_node;
 	LinkIterator<T> itr;
 	int m_size;
 };

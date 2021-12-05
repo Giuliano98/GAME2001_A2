@@ -5,48 +5,22 @@ using namespace std;
 class MyTestClass
 {
 public:
+	MyTestClass() : m_priority(0), m_id(0) {}
+	MyTestClass(int p, int id) : m_priority(p), m_id(id) {}
+	~MyTestClass() {}
 
-private:
-	int m_priority;
-	int m_id;
-};
-
-
-class NetworkMessage
-{
-public:
-	NetworkMessage() : m_priority(0), m_id(0) {}
-	NetworkMessage(int p, int id) : m_priority(p), m_id(id) {}
-	~NetworkMessage() {}
-
-	int GetPriority()
-	{
-		return m_priority;
-	}
-	int GetID()
-	{
-		return m_id;
-	}
+	int GetPriority() { return m_priority; }
+	int GetID() { return m_id; }
 
 	// Overload operator
-	bool operator<(NetworkMessage& m)
+	bool operator<(MyTestClass& m)
 	{
-		// Check the priority level of both network messages
 		if (m_priority < m.GetPriority())
-		{
 			return true;
-		}
-		else if (m_id < m.GetID())
-		{
-			return true;
-		}
 
 		return false;
 	}
-	bool operator>(NetworkMessage& m)
-	{
-		return !(*this < m);	// NOT( this is less than m )
-	}
+	bool operator>(MyTestClass& m) { return !(*this < m); }
 private:
 	int m_priority;
 	int m_id;
@@ -54,34 +28,45 @@ private:
 
 int main()
 {
-	cout << "Priority queue data structure example!" << endl << endl;
-
+	cout << "Priority Queue list based in a Doubly Linked List!" << endl << endl;
+	
 	const int SIZE = 2;
-	PriorityQueue<NetworkMessage, less_cmp<NetworkMessage> > que(SIZE);
-	cout << que.GetMaxSize() << endl;
-	cout << "Priority queue content (Size - " << que.GetSize() << ") : " << endl;
+	PriorityQueue<MyTestClass, less_cmp<MyTestClass> > MyQueue(SIZE);
+	cout << "Queue Max Size: " << MyQueue.GetMaxSize() << endl;
+	cout << "Queue content Size: " << MyQueue.GetSize() << endl;
+	cout << "---------------------------------------------"  << endl;
 
-	que.push(NetworkMessage(3, 100));
-	que.push(NetworkMessage(2, 286));
-	que.push(NetworkMessage(1, 362));
-	que.push(NetworkMessage(3, 435));
+	MyQueue.push(MyTestClass(3, 100));
+	MyQueue.push(MyTestClass(2, 286));
+	MyQueue.push(MyTestClass(1, 362));
+	MyQueue.push(MyTestClass(3, 435));
+	MyQueue.push(MyTestClass(6, 865));
+
+	MyQueue.pop();
+	MyQueue.pop();
+
+	MyQueue.push(MyTestClass(2, 745));
+	MyQueue.push(MyTestClass(9, 385));
+	MyQueue.push(MyTestClass(5, 355));
 
 	// Display the priority queue
-	cout << "Priority queue content (Size - " << que.GetSize() << ") : " << endl;
-	cout << que.GetMaxSize() << endl;
+	cout << "After some Push and Pop"  << endl;
+	cout << "Queue Max Size: " << MyQueue.GetMaxSize() << endl;
+	cout << "Queue content Size: " << MyQueue.GetSize() << endl;
+	cout << "---------------------------------------------"  << endl;
 
-	while (que.isEmpty() == false)
+	while (!MyQueue.isEmpty())
 	{
-		cout << "  Priority: " << que.front().GetPriority();
-		cout << "  ID: " << que.front().GetID();
+		cout << "  Priority: " << MyQueue.front().GetPriority();
+		cout << "  ID: " << MyQueue.front().GetID();
 		cout << endl;
 
-		que.pop();
+		MyQueue.pop();
 	}
 
-	cout << endl;
+	cout << "---------------------------------------------"  << endl;
 
-	if (que.isEmpty() == true)
+	if (MyQueue.isEmpty() == true)
 	{
 		cout << "The container is empty." << endl;
 	}
@@ -89,6 +74,8 @@ int main()
 	{
 		cout << "The container is NOT empty." << endl;
 	}
+
+	cout << endl  << endl;
 
 	return 0;
 }
