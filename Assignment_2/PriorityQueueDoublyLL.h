@@ -6,6 +6,7 @@ template <class T> class LinkIterator;
 template <class T> class DoublyLinkedList;
 // ---------------------------
 
+
 // Node Class - in a Doubly Linked List
 template <class T>
 class LinkNode
@@ -139,7 +140,7 @@ private:
 		if (it.m_node == m_lastNode)
 			m_lastNode = node;
 	}
-	void UpdateNodesPointers(Location loc, LinkNode<T>* node, LinkIterator<T>* it, T* newData)
+	void UpdateNodesPointers(Location loc, LinkNode<T>* node, LinkIterator<T>& it, T& newData)
 	{
 		switch (loc)
 		{
@@ -151,7 +152,6 @@ private:
 			break;
 		}
 	}
-
 
 	void UpdateNodePointersPushFront(LinkNode<T>* node)
 	{
@@ -169,11 +169,11 @@ private:
 	}
 	void UpdateNodePointersPopFront()
 	{
-		m_root = m_root->m_next;    // Set the next point of root as the new root
+		m_root = m_root->m_next;    // Set the next ptr of root as the new root
 
 		if (m_root != nullptr)  	// Check if the new root is pointing to somewhere.
 			m_root->m_previous = nullptr;
-		else					    // If it's pointing to nullptr, set lastNode to nullptr
+		else					    // If there's nothing behind, set lastNode to nullptr
 			m_lastNode = nullptr;
 	}
 	void UpdateNodePointersPushBack(LinkNode<T>* node)
@@ -256,20 +256,20 @@ public:
 	// ------------------------------------------------------------
 	
 	// --------------- PRIORITY QUEUE FUNCTIONS --------------------
-	void Insert_Before(LinkIterator<T>* it, T newData)
+	void Insert_Before(LinkIterator<T>& it, T& newData)
 	{
-		assert(it->m_node != nullptr);
-
+		assert(it.m_node != nullptr);
+		
 		// Create a new node
 		auto node = CreateNewNode();
 
 		// Change/Update pointer of next and previous to the new node
-		UpdateNodesPointers(Before, node, it, &newData);
+		UpdateNodesPointers(Before, node, it, newData);
 
 		// You add a new Node SO increase the link list size
 		IncreaseSize();
 	}
-	void Insert_After(LinkIterator<T>* it, T newData)
+	void Insert_After(LinkIterator<T>& it, T& newData)
 	{
 		assert(it->m_node != nullptr);
 
@@ -277,7 +277,7 @@ public:
 		auto node = CreateNewNode();
 
 		// Change/Update pointer of next and previous to the new node
-		UpdateNodesPointers(After, node, it, &newData);
+		UpdateNodesPointers(After, node, it, newData);
 
 		// You add a new Node SO increase the link list size
 		IncreaseSize();
